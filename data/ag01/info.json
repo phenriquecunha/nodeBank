@@ -1,0 +1,12 @@
+{
+    "address": {
+        "rua": "rua da fortuna",
+        "bairro": "bairro da avareza",
+        "cidade": "são paulo",
+        "estado": "SP"
+    },
+    "cofre": {
+        "saldo": 0,
+        "emprestado": 0
+    }
+}
