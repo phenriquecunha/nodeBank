@@ -51,8 +51,47 @@ function login(){
         console.log("Error 404: Conta não encontrada!");
     }
     const pass = terminal.question("Digite a senha\n :")
+    if(check_pass(acc,pass)){
+        console.log("Conta validada!")
+        pause(2000)
+        console.log("Entrando na conta...");
+        pause(3000)
+    }else{
+        console.log("Senha incorreta!");
+    }
 }
 
+function logged(acc){
+    const index = ag01.users.accounts.map(value => value.acc).indexOf(acc)
+    const balance = ag01.users.accounts[index].cash
+    console.log(`SALDO: ${balance}`)
+    console.log("1) SAQUE");
+    console.log("2) DEPÓSITO");    
+    console.log("3) TRANSFERÊNCIA");
+    const r = terminal.question(": ")
+    switch(r){
+        case 1:
+            withdraw()
+            break
+        case 2:
+            deposit()
+            break
+        case 3:
+            transference()
+            break
+        default:
+            console.log("Opção inexistente, favor selecione uma das opções disponíveis")
+    }
+}
+function withdraw(acc, index, value){
+    const balance =
+}
+function deposit(acc, index, value){
+
+}
+function transference(acc, index, target){
+
+}
 function check_cpf(cpf){
     if(/[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}/g.exec(cpf) != null){
         return true
@@ -65,14 +104,21 @@ function check_acc(acc){
     if(acc in accounts){       
         return {
             exist: true,
-            cpf: ag01.user.accounts.cpf[accounts.indexOf(acc)]
+            cpf: ag01.user.accounts.cpf[accounts.indexOf(acc)],
+            index: accounts.indexOf(acc)
         }
     }else{
         return false
     }
 }
-function check_pass(acc,pass){
-    
+function check_pass(acc, index, pass){
+    const passwords = ag01.users.accounts.map(value => value.pass)
+
+    if(pass == passwords[index]){
+        return true
+    }else{
+        return false
+    }
 }
 function User(){
     return{
@@ -83,4 +129,9 @@ function User(){
         pass: "",
         cash: 0 
     }
+}
+
+function pause(sec) {
+	var dt = new Date();
+	while ((new Date()) - dt <= sec) { /* Não faz nada*/ }
 }
