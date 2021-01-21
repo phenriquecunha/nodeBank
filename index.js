@@ -28,14 +28,7 @@ while(true){
 }
     
 function register(){
-    const user = {
-        id: ag01.users.accounts.length,
-        name: "",
-        cpf: "",
-        acc: `10${ag01.users.accounts.length > 9 ? ag01.users.accounts.length : `0${+ag01.users.accounts.length}`}`,
-        pass: "",
-        cash: 0 
-    }
+    const user = new User()
     user.name = terminal.question("Digite o nome completo\n: ")
     user.cpf = terminal.question("Digite seu cpf(no formato 000.000.000-00)\n: ")
     user.pass = terminal.question("Escolha sua nova senha\n: ",{hideEchoBack: true})
@@ -49,10 +42,45 @@ function register(){
     }
 }
 
+function login(){
+    const acc = terminal.question("Digite o número da conta\n:")
+    if(check_acc(acc).exist){
+        console.log("Conta encontrada!");
+        console.log(`Vinculada ao CPF: ${check_acc(acc).cpf}`);
+    }else{
+        console.log("Error 404: Conta não encontrada!");
+    }
+    const pass = terminal.question("Digite a senha\n :")
+}
+
 function check_cpf(cpf){
     if(/[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}/g.exec(cpf) != null){
         return true
     }else{
         return false
+    }
+}
+function check_acc(acc){
+    const accounts = ag01.users.accounts.map(value => value.acc)
+    if(acc in accounts){       
+        return {
+            exist: true,
+            cpf: ag01.user.accounts.cpf[accounts.indexOf(acc)]
+        }
+    }else{
+        return false
+    }
+}
+function check_pass(acc,pass){
+    
+}
+function User(){
+    return{
+        id: ag01.users.accounts.length,
+        name: "",
+        cpf: "",
+        acc: `10${ag01.users.accounts.length > 9 ? ag01.users.accounts.length : `0${+ag01.users.accounts.length}`}`,
+        pass: "",
+        cash: 0 
     }
 }
