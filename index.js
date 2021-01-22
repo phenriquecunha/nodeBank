@@ -54,10 +54,10 @@ function login(){
     if(check_pass(acc,pass)){
         console.log("Conta validada!")
         pause(2000)
-        console.log("Entrando na conta...");
+        console.log("Entrando na conta...")
         pause(3000)
     }else{
-        console.log("Senha incorreta!");
+        console.log("Senha incorreta!")
     }
 }
 
@@ -65,31 +65,54 @@ function logged(acc){
     const index = ag01.users.accounts.map(value => value.acc).indexOf(acc)
     const balance = ag01.users.accounts[index].cash
     console.log(`SALDO: ${balance}`)
-    console.log("1) SAQUE");
-    console.log("2) DEPÓSITO");    
-    console.log("3) TRANSFERÊNCIA");
+    console.log("1) SAQUE")
+    console.log("2) DEPÓSITO")    
+    console.log("3) TRANSFERÊNCIA")
     const r = terminal.question(": ")
     switch(r){
         case 1:
-            withdraw()
+            const value = terminal.question("Digite o valor\n: ")
+            if(withdraw(acc, index, value)){
+                pause(3000)
+                console.log("Saque efetuado com sucesso!")
+            }else{
+                console.log("Saldo insuficiente!")
+            }
             break
         case 2:
-            deposit()
+            const value = terminal.question("Digite o valor\n: ")
+            deposit(acc, index, value)
             break
         case 3:
-            transference()
+            const index = terminal.question("Digite o número da conta\n: ")
+            const target = terminal.question("Digite o número da conta\n: ")
+            const value = terminal.question("Digite o valor\n: ")
+            transference(acc, index, value, target)
             break
         default:
             console.log("Opção inexistente, favor selecione uma das opções disponíveis")
     }
 }
 function withdraw(acc, index, value){
-    const balance =
-}
-function deposit(acc, index, value){
+    const balance = ag01.users.accounts[index].cash
+    if(balance -= value > 0){
+        balance -= value
+        return true
+    }else{
+        return false
+    }
 
 }
-function transference(acc, index, target){
+function deposit(acc, index, value){
+    const balance = ag01.users.accounts[index].cash
+    console.log("Aguarde...");
+    pause(3000)
+    console.log(("Depósito realizado com sucesso!"))
+    console.log(`Saldo anterior: ${balance}`)
+    balance += value
+    console.log(`Saldo atual: ${balance}`)
+}
+function transference(acc, index, value, target){
 
 }
 function check_cpf(cpf){
