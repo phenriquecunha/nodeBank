@@ -19,20 +19,20 @@ while(true){
             case '2':
                 login()
                 break
-            case '3':
-                delete_acc()
-                break
-            default:
-                console.log("Opção incorreta!")
-        }
-}
-    
-function register(){
-    const user = new User()
-    user.name = terminal.question("Digite o nome completo\n: ")
-    user.cpf = terminal.question("Digite seu cpf(no formato 000.000.000-00)\n: ")
-    user.pass = terminal.question("Escolha sua nova senha\n: ",{hideEchoBack: true})
-    if(check_cpf(user.cpf)){
+                case '3':
+                    delete_acc()
+                    break
+                    default:
+                        console.log("Opção incorreta!")
+                    }
+                }
+                
+                function register(){
+                    const user = new User()
+                    user.name = terminal.question("Digite o nome completo\n: ")
+                    user.cpf = terminal.question("Digite seu cpf(no formato 000.000.000-00)\n: ")
+                    user.pass = terminal.question("Escolha sua nova senha\n: ",{hideEchoBack: true})
+                    if(check_cpf(user.cpf)){
         ag01.users.accounts.push(user)
         fs.writeFileSync(path_users, JSON.stringify(ag01))
         console.log("Conta criada!")
@@ -42,6 +42,7 @@ function register(){
     }
 }
 
+//BUG Mudar índice dos parâmetro para id's do json
 function login(){
     const acc = terminal.question("Digite o número da conta\n:")
     if(check_acc(acc).exist){
@@ -56,6 +57,7 @@ function login(){
         pause(2000)
         console.log("Entrando na conta...")
         pause(3000)
+        logged(acc)
     }else{
         console.log("Senha incorreta!")
     }
@@ -96,7 +98,7 @@ function logged(acc){
 function withdraw(acc, index, value){
     const balance = ag01.users.accounts[index].cash
     if(balance -= value > 0){
-        balance -= value
+        ag01.users.accounts[index].cash -= value
         return true
     }else{
         return false
@@ -104,16 +106,19 @@ function withdraw(acc, index, value){
 
 }
 function deposit(acc, index, value){
-    const balance = ag01.users.accounts[index].cash
     console.log("Aguarde...");
     pause(3000)
     console.log(("Depósito realizado com sucesso!"))
     console.log(`Saldo anterior: ${balance}`)
-    balance += value
+    ag01.users.accounts[index].cash += value
     console.log(`Saldo atual: ${balance}`)
 }
 function transference(acc, index, value, target){
-
+    //TODO Arrumar este método de índices.
+    // const balance = ag01.users.accounts[index].cash
+    // if(check_acc(target)){
+    //     ag01.users.accounts[index].cash
+    // }
 }
 function check_cpf(cpf){
     if(/[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}/g.exec(cpf) != null){
